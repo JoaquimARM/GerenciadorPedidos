@@ -11,20 +11,28 @@
         <table>
             <thead>
                 <tr>
-                    <th>Produto</th>
+                    <th>Produtos</th>
                     <th>Quantidade</th>
-                    <th>Valor</th>
+                    <th>Valor Total</th>
                     <th>Data</th>
                     <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="pedido : ${pedidos}">
-                    <td th:text="${pedido.produto.nome}"></td>
+                    <td>
+                        <ul>
+                            <li th:each="produto : ${pedido.produtos}" th:text="${produto.nome}"></li>
+                        </ul>
+                    </td>
                     <td th:text="${pedido.quantidade}"></td>
-                    <td th:text="${pedido.valor}"></td>
+                    <td th:text="${pedido.valorTotal}"></td>
                     <td th:text="${pedido.data}"></td>
                     <td th:text="${pedido.status}"></td>
+                    <td>
+                        <a th:href="@{/pedidos/editar/{id}(id=${pedido.id})}" class="button">Editar</a>
+                        <a th:href="@{/pedidos/remover/{id}(id=${pedido.id})}" class="button">Remover</a>
+                    </td>
                 </tr>
             </tbody>
         </table>

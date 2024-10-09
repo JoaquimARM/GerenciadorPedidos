@@ -21,6 +21,10 @@
                     <td th:text="${produto.nome}"></td>
                     <td th:text="${produto.estoque}"></td>
                     <td th:text="${produto.preco}"></td>
+                    <td>
+                        <a th:href="@{/produtos/editar/{id}(id=${produto.id})}" class="button">Editar</a>
+                        <a th:href="@{/produtos/remover/{id}(id=${produto.id})}" class="button">Remover</a>
+                    </td>
                 </tr>
             </tbody>
         </table>

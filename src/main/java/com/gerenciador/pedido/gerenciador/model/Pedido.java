@@ -1,6 +1,8 @@
 package com.gerenciador.pedido.gerenciador.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -8,6 +10,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -17,11 +20,12 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Produto produto;  
+    @ManyToMany
+    private List<Produto> produtos = new ArrayList<>();  // Lista de produtos selecionados
 
     private int quantidade;
-    private float valorTotal;
+    private double valorTotal; // Valor total baseado na soma dos produtos
+
     private LocalDate data = LocalDate.now();
 
     @Enumerated(EnumType.STRING)
@@ -31,6 +35,12 @@ public class Pedido {
         this.status = novoStatus;
     }
     
+    public void calcularValorTotal() {
+        this.valorTotal = this.produtos.stream()
+            .mapToDouble(produto -> produto.getPreco() * this.quantidade)
+            .sum();
+    }
+
 	public Long getId() {
 		return id;
 	}
@@ -39,12 +49,12 @@ public class Pedido {
 		this.id = id;
 	}
 
-	public Produto getProduto() {
-		return produto;
+	public List<Produto> getProdutos() {
+		return produtos;
 	}
 
-	public void setProduto(Produto produto) {
-		this.produto = produto;
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 
 	public int getQuantidade() {
@@ -59,8 +69,8 @@ public class Pedido {
 		return valorTotal;
 	}
 
-	public void setValorTotal(float valor) {
-		this.valorTotal = valor;
+	public void setValorTotal(float valorTotal) {
+		this.valorTotal = valorTotal;
 	}
 
 	public LocalDate getData() {
@@ -78,8 +88,7 @@ public class Pedido {
 	public void setStatus(StatusEnum status) {
 		this.status = status;
 	}
-
 	
-	
+    
     
 }

@@ -136,7 +136,8 @@ body {
 		}
 		
 		header {
-		    background-color: #333;
+		    background-color: #FFFFFF;
+		    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 		    padding: 10px 0;
 		}
 		
